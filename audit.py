@@ -60,9 +60,10 @@ def get_audit_results(report_dir, model_idx, mia_scores, target_memberships, log
     attack_result = compute_attack_results(mia_scores, target_memberships)
     Path(report_dir).mkdir(parents=True, exist_ok=True)
     logger.info(
-        "Target Model %d: AUC %.4f, TPR@0.1%%FPR of %.4f, TPR@0.0%%FPR of %.4f",
+        "Target Model %d: AUC %.4f, TPR@1%%FPR of %.4f, TPR@0.1%%FPR of %.4f, TPR@0.0%%FPR of %.4f",
         model_idx,
         attack_result["auc"],
+        attack_result["one_fpr"],
         attack_result["one_tenth_fpr"],
         attack_result["zero_fpr"],
     )
@@ -85,6 +86,7 @@ def get_audit_results(report_dir, model_idx, mia_scores, target_memberships, log
         fpr=attack_result["fpr"],
         tpr=attack_result["tpr"],
         auc=attack_result["auc"],
+        one_fpr=attack_result["one_fpr"],
         one_tenth_fpr=attack_result["one_tenth_fpr"],
         zero_fpr=attack_result["zero_fpr"],
         scores=mia_scores.ravel(),
@@ -110,8 +112,9 @@ def get_average_audit_results(report_dir, mia_score_list, membership_list, logge
     attack_result = compute_attack_results(mia_scores, target_memberships)
     Path(report_dir).mkdir(parents=True, exist_ok=True)
     logger.info(
-        "Average result: AUC %.4f, TPR@0.1%%FPR of %.4f, TPR@0.0%%FPR of %.4f",
+        "Average result: AUC %.4f, TPR@1%%FPR of %.4f, TPR@0.1%%FPR of %.4f, TPR@0.0%%FPR of %.4f",
         attack_result["auc"],
+        attack_result["one_fpr"],
         attack_result["one_tenth_fpr"],
         attack_result["zero_fpr"],
     )
@@ -134,6 +137,7 @@ def get_average_audit_results(report_dir, mia_score_list, membership_list, logge
         fpr=attack_result["fpr"],
         tpr=attack_result["tpr"],
         auc=attack_result["auc"],
+        one_fpr=attack_result["one_fpr"],
         one_tenth_fpr=attack_result["one_tenth_fpr"],
         zero_fpr=attack_result["zero_fpr"],
         scores=mia_scores.ravel(),
